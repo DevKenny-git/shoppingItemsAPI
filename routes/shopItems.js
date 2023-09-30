@@ -60,12 +60,18 @@ router.patch("/edit/:id", async (req, res) => {
 
 
 router.delete("/:id", async (req, res) => {
-    const item = await shopItemsCollection.findById(req.params.id);
+    const {id} = req.params;
+    try {
+        const itemDeleted = await shopItemsCollection.findByIdAndDelete(id);
+        if (!itemDeleted) {
+            return res.status(404).json({message: "Item not Found"});
+        }
+        res.send(`${itemDeleted} has been successfully deleted`);
 
-    if (req.decoded.userId != item.user) return res.status(401).send("You are not allow to delete this Item");
-
-    await shopItemsCollection.findByIdAndDelete(req.params.id);
-    res.send("Item has been successfully deleted");
+    } catch (e) {
+        console.log(e);
+        return res.sendStatus(400);
+    }
 })
 
 module.exports = router;
