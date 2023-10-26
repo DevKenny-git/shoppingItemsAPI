@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const {shopItemsCollection} = require("../schema/shopItemsSchema")
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+// const jwt = require("jsonwebtoken");
+// require("dotenv").config();
 const {isUserLoggedIn, onlyAdmin} = require("./middleware")
 
 router.use(isUserLoggedIn);
@@ -34,7 +34,7 @@ router.post("/add", async (req, res) => {
             isInStock,
             user: req.decoded.userId
         })
-        res.json({
+        return res.json({
             isRequestSuccessful: true,
             single
         })
@@ -66,12 +66,12 @@ router.delete("/:id", async (req, res) => {
         if (!itemDeleted) {
             return res.status(404).json({message: "Item not Found"});
         }
-        res.send(`${itemDeleted} has been successfully deleted`);
+        res.send("Item has successfully been deleted deleted");
 
     } catch (e) {
         console.log(e);
         return res.sendStatus(400);
     }
-})
+});
 
 module.exports = router;

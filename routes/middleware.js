@@ -3,25 +3,32 @@ const jwt = require("jsonwebtoken");
 
 
 function isUserLoggedIn(req, res, next) {
-    const authorizationHeader = req.headers.authorization;
-    if (!authorizationHeader) {
-        res.status(401).send("no authorization header");
-        return;
-    }
+    try {
+        const authorizationHeader = req.headers.authorization;
+        if (!authorizationHeader) {
+            res.status(401).send("no authorization header");
+            return;
+        }
+        
+        console.log(authorizationHeader);
 
-    const val = authorizationHeader.split(" ");
-
-    const tokenType = val[0];
-    const tokenValue = val[1];
-
-    if (tokenType == "Bearer") {
+        const val = authorizationHeader.split(" ");
+    
+        const tokenType = val[0];
+        const tokenValue = val[1];
+    
+        if (tokenType != "Bearer") {
+            res.status(401).send("not authorized");
+        }
         const decoded = jwt.verify(tokenValue, process.env.secret);
         req.decoded = decoded;
         next();
-        return;
+        
+    } catch (err) {
+        console.log(err);
     }
-    res.status(401).send("not authorized");
 }
+
 
 
 function onlyAdmin (req, res, next) {
