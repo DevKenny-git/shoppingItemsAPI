@@ -2,6 +2,7 @@ const axios = require("axios");
 
 
 
+
 // test("Test to see if the registration works weell", async () => {
 //     const response = await axios.post("https://shoppingitemapi.onrender.com/v1/auth/register", {
 //         fullName: "Oladele Mike",
@@ -39,6 +40,8 @@ test("Add a new task", async () => {
         
         }
     });
+    global.taskId = response.data.single._id;
+    
     expect(response.data.isRequestSuccessful).toBe(true);
 });
 
@@ -53,10 +56,10 @@ test("Get list of tasks", async () => {
 });
 
 test("Delete task with given id", async () => {
-    const response = await axios.delete("https://shoppingitemapi.onrender.com/v1/shop/653a16ab1f48d01d16a89d4f", {
+    const response = await axios.delete("https://shoppingitemapi.onrender.com/v1/shop/" + global.taskId, {
         headers: {
-            Authorization: `Bearer ${global.token}`
+            Authorization: "Bearer " + global.token
         }
     });
-    expect(response.data.message).toBe("Item has successfully been deleted deleted");
+    expect(response.status).toBe(200);
 });

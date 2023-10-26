@@ -34,6 +34,7 @@ router.post("/add", async (req, res) => {
             isInStock,
             user: req.decoded.userId
         })
+        
         return res.json({
             isRequestSuccessful: true,
             single
@@ -52,6 +53,7 @@ router.patch("/edit/:id", async (req, res) => {
             price, 
             isInstock
     }, {new: true})
+    
     res.json({
         "message": "Item updated successfully",
         updatedItem
