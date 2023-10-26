@@ -66,7 +66,7 @@ router.delete("/:id", async (req, res) => {
         if (!itemDeleted) {
             return res.status(404).json({message: "Item not Found"});
         }
-        res.send("Item has successfully been deleted deleted");
+        res.status(200).send("Item has successfully been deleted deleted");
 
     } catch (e) {
         console.log(e);

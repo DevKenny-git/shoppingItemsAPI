@@ -55,7 +55,7 @@ test("Get list of tasks", async () => {
 test("Delete task with given id", async () => {
     const response = await axios.delete("https://shoppingitemapi.onrender.com/v1/shop/653a16ab1f48d01d16a89d4f", {
         headers: {
-            authorization: `Bearer ${global.token}`
+            Authorization: `Bearer ${global.token}`
         }
     });
     expect(response.data.message).toBe("Item has successfully been deleted deleted");
